@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Google Maps Ruler basic sample</title>
+  <style>
+    html, body, #map-canvas {
+      height: 100%;
+      margin: 0;
+      padding: 0;
+    }
+  </style>
+  <link rel="stylesheet" href="../google-maps-ruler.css">
+</head>
+<body>
+  <script src="https://maps.googleapis.com/maps/api/js"></script>
+  <script src="../build/google-maps-ruler.js"></script>
+  <script>
+    function initialize() {
+      var mapOptions = {
+        center: { lat: -34.397, lng: 150.644},
+        zoom: 8
+      };
+      var map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
+      gmruler.init(map);
+    }
+    google.maps.event.addDomListener(window, 'load', initialize);
+  </script>
+  <div id="map-canvas">
+  </div>
+</body>
+</html>

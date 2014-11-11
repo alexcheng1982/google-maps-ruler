@@ -1,0 +1,57 @@
+{
+  "name": "google-maps-ruler",
+  "version": "1.0.0",
+  "description": "Ruler on Google Maps to measure distance.",
+  "homepage": "https://github.com/alexcheng1982/google-maps-ruler",
+  "author": "Fu Cheng <alexcheng1982@gmail.com> (https://github.com/alexcheng1982)",
+  "contributors": [
+  ],
+  "keywords": [
+    "ruler",
+    "google-maps"
+  ],
+  "main": "./google-maps-ruler.js",
+  "engines": {
+    "node": "*"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/alexcheng1982/google-maps-ruler.git"
+  },
+  "bugs": {
+    "url": "https://github.com/alexcheng1982/google-maps-ruler/issues"
+  },
+  "licenses": [
+    {
+      "type": "MIT"
+    }
+  ],
+  "devDependencies": {
+    "uglify-js": "latest",
+    "grunt": "latest",
+    "nodeunit": "latest",
+    "benchmark": "latest",
+    "grunt-contrib-jshint": "latest",
+    "grunt-contrib-nodeunit": "latest",
+    "grunt-contrib-concat": "latest",
+    "grunt-contrib-uglify": "latest",
+    "grunt-contrib-watch": "latest",
+    "grunt-contrib-coffee": "latest",
+    "grunt-contrib-watch": "latest",
+    "grunt-umd": "latest",
+    "grunt-env": "latest",
+    "grunt-jscs": "0.7.1",
+    "grunt-karma": "latest",
+    "grunt-benchmark": "latest",
+    "grunt-string-replace": "latest",
+    "load-grunt-tasks": "latest",
+    "karma": "latest",
+    "karma-chrome-launcher": "latest",
+    "karma-firefox-launcher": "latest",
+    "karma-nodeunit": "latest",
+    "karma-sauce-launcher": "latest"
+  },
+  "scripts": {
+    "test": "grunt test:node"
+  }
+}
