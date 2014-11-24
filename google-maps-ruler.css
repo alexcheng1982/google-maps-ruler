@@ -1,5 +1,11 @@
 .gmruler-label {
   position: absolute;
-  border: 1px solid #ccc;
-  padding: 5px;
+  padding: .2em .6em .3em;
+  cursor: pointer;
+  color: #fff;
+  background-color: #777;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: baseline;
+  border-radius: .25em;
 }
