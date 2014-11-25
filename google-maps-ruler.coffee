@@ -2,7 +2,7 @@ $GM = google.maps
 $GME = $GM.event
 
 gmruler =
-  init: (@map, opts = {}) ->
+  init: (@map, @options = {}) ->
     @points = []
     @createLine()
     $GME.addListener(@map, 'rightclick', (event) =>
@@ -13,26 +13,29 @@ gmruler =
     return if @line
     @line = new $GM.Polyline(
       path: []
-      strokeColor: '#ff0000'
-      strokeWeight: 2
+      strokeColor: @options.strokeColor || '#ff0000'
+      strokeWeight: @options.strokeWeight || 2
     )
     @line.setMap(@map)
 
   addPoint: (latLng) ->
     num = @points.length
     @line.getPath().push(latLng)
-    point = new LabelOverlay(@map, latLng, num, this)
+    point = new LabelOverlay(@map, latLng, num, this, @options)
     @points.push(point)
     @updateDistance(num)
+
+  removePoint: (index) ->
+    @pointRemoved(index)
 
   calculateDistance: (point1, point2) ->
     $GM.geometry.spherical.computeDistanceBetween(point1, point2)
 
-  labelPositionUpdated: (index, position) ->
+  pointPositionUpdated: (index, position) ->
     @line.getPath().setAt(index, position)
     @updateDistance(index)
 
-  labelRemoved: (index) ->
+  pointRemoved: (index) ->
     return if index == 0
     @line.getPath().removeAt(index)
     @points.splice(index, 1)
@@ -54,7 +57,7 @@ gmruler =
     @line.getPath().getAt(index)
 
 class LabelOverlay extends $GM.OverlayView
-  constructor: (@map, @position, @index, @observer) ->
+  constructor: (@map, @position, @index, @observer, @options = {}) ->
     @container = document.createElement('div')
     @container.className = 'gmruler-label'
     @distance = if @index == 0 then 0 else -1
@@ -79,7 +82,7 @@ class LabelOverlay extends $GM.OverlayView
           @set('position', latLng)
           @draw()
 
-          @observer.labelPositionUpdated(@index, latLng) if @observer && @observer.labelPositionUpdated
+          @observer.pointPositionUpdated(@index, latLng) if @observer && @observer.pointPositionUpdated
         )
       ),
 
@@ -91,7 +94,7 @@ class LabelOverlay extends $GM.OverlayView
       $GME.addDomListener(@container, 'dblclick', (e) =>
         return if @index == 0
         @onRemove()
-        @observer.labelRemoved(@index) if @observer && @observer.labelRemoved
+        @observer.pointRemoved(@index) if @observer && @observer.pointRemoved
         @stopEvent(e)
       )
     ]
@@ -105,13 +108,16 @@ class LabelOverlay extends $GM.OverlayView
     @container.style.top = loc.y + 'px'
 
   updateDistance: () ->
-    @container.innerHTML = if @distance > 0 then (@distance / 1000).toFixed(2) + ' km' else if @distance == 0 then 'Start' else ''
+    markup = switch @options.distanceUnit
+      when 'mile' then (@distance * 0.000621371).toFixed(2) + ' mile(s)'
+      else (@distance / 1000).toFixed(2) + ' km'
+    @container.innerHTML = if @distance > 0 then markup else if @distance == 0 then 'Start' else ''
 
   onRemove: () ->
     @container.parentNode.removeChild(@container)
     for eventListener in @eventListeners
       $GME.removeListener(eventListener)
-      
+
   stopEvent: (e) ->
     e.preventDefault() if e.preventDefault
     e.cancelBubble = true
