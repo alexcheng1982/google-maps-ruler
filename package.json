@@ -38,6 +38,7 @@
     "grunt-contrib-watch": "latest",
     "grunt-contrib-coffee": "latest",
     "grunt-contrib-watch": "latest",
+    "grunt-contrib-copy": "latest",
     "grunt-umd": "latest",
     "grunt-env": "latest",
     "grunt-jscs": "0.7.1",

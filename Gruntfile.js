@@ -33,12 +33,27 @@ module.exports = function(grunt) {
         objectToExport: 'gmruler',
         globalAlias: 'gmruler'
       }
+    },
+    uglify: {
+      dist: {
+        files: {
+          'dist/<%= pkg.name %>.min.js': 'build/<%= pkg.name %>.js'
+        }
+      }
+    },
+    copy: {
+      dist: {
+        src: 'build/<%= pkg.name %>.js',
+        dest: 'dist/<%= pkg.name %>.js'
+      }
     }
   });
 
   grunt.loadNpmTasks('grunt-contrib-watch');
   grunt.loadNpmTasks('grunt-contrib-coffee');
   grunt.loadNpmTasks('grunt-umd');
-  grunt.registerTask('dev', ['watch']);
-  grunt.registerTask('default', ['coffee', 'umd']);
+  grunt.loadNpmTasks('grunt-contrib-uglify');
+  grunt.loadNpmTasks('grunt-contrib-copy');
+  grunt.registerTask('default', ['watch']);
+  grunt.registerTask('dist', ['coffee', 'umd', 'uglify:dist', 'copy:dist']);
 };
