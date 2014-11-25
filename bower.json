@@ -1,7 +1,7 @@
 {
   "name": "google-maps-ruler",
   "version": "1.0.0",
-  "main": "google-maps-ruler.js",
+  "main": "dist/google-maps-ruler.js",
   "ignore": [
     "**/.*",
     "node_modules",
@@ -9,10 +9,7 @@
     "test",
     "tests",
     "tasks",
-    "component.json",
-    "composer.json",
     "Gruntfile.js",
-    "package.js",
     "package.json"
   ]
 }
