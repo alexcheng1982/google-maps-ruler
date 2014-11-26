@@ -1,6 +1,6 @@
 {
   "name": "google-maps-ruler",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "main": "dist/google-maps-ruler.js",
   "ignore": [
     "**/.*",
