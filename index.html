@@ -1,0 +1,107 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>Google-maps-ruler by alexcheng1982</title>
+
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/github-light.css">
+    <script src="javascripts/scale.fix.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="wrapper">
+      <header>
+        <h1 class="header">Google-maps-ruler</h1>
+        <p class="header">A small JavaScript library to allow users to measure distance between multiple points on Google Maps.</p>
+
+        <ul>
+          <li class="download"><a class="buttons" href="https://github.com/alexcheng1982/google-maps-ruler/zipball/master">Download ZIP</a></li>
+          <li class="download"><a class="buttons" href="https://github.com/alexcheng1982/google-maps-ruler/tarball/master">Download TAR</a></li>
+          <li><a class="buttons github" href="https://github.com/alexcheng1982/google-maps-ruler">View On GitHub</a></li>
+        </ul>
+
+        <p class="header">This project is maintained by <a class="header name" href="https://github.com/alexcheng1982">alexcheng1982</a></p>
+
+
+      </header>
+      <section>
+        <h1>
+<a id="ruler-of-google-maps" class="anchor" href="#ruler-of-google-maps" aria-hidden="true"><span class="octicon octicon-link"></span></a>Ruler of Google Maps</h1>
+
+<p><code>google-maps-ruler</code> is a small JavaScript library to allow users to measure distance between points on Google Maps.</p>
+
+<h1>
+<a id="install" class="anchor" href="#install" aria-hidden="true"><span class="octicon octicon-link"></span></a>Install</h1>
+
+<h2>
+<a id="bower" class="anchor" href="#bower" aria-hidden="true"><span class="octicon octicon-link"></span></a>Bower</h2>
+
+<p>Use <code>bower install google-maps-ruler</code> to install this package.</p>
+
+<h2>
+<a id="download" class="anchor" href="#download" aria-hidden="true"><span class="octicon octicon-link"></span></a>Download</h2>
+
+<p>Download from GitHub and include <code>dist/google-maps-ruler.js</code> or <code>dist/google-maps-ruler.min.js</code> in your app.</p>
+
+<h1>
+<a id="how-to-use" class="anchor" href="#how-to-use" aria-hidden="true"><span class="octicon octicon-link"></span></a>How to use</h1>
+
+<p><code>google-maps-ruler</code> uses <a href="https://github.com/umdjs/umd">UMD</a>, so it works in CommonJS, AMD and browser environments. For example, if the JavaScript file is included using <code>&lt;script&gt;</code> directly, it exposes a global object <code>gmruler</code>.</p>
+
+<p><code>gmruler</code> requires a <code>google.maps.Map</code> object to work with. After <code>google.maps.Map</code> is created, use <code>gmruler.init</code> to initialize.</p>
+
+<div class="highlight highlight-coffeescript"><pre>gmruler.init(map, {
+  <span class="pl-v"><span class="pl-v">distanceUnit:</span></span> <span class="pl-s"><span class="pl-pds">'</span>mile<span class="pl-pds">'</span></span>
+})</pre></div>
+
+<h2>
+<a id="user-interactions" class="anchor" href="#user-interactions" aria-hidden="true"><span class="octicon octicon-link"></span></a>User interactions</h2>
+
+<p>After <code>google-maps-ruler</code> is initialized on the map, following user interactions are supported:</p>
+
+<ul>
+<li>Right click to add a new point.</li>
+<li>Double-click on a point to remove it.</li>
+<li>Drag the point label to change its position.</li>
+</ul>
+
+<h2>
+<a id="configurations" class="anchor" href="#configurations" aria-hidden="true"><span class="octicon octicon-link"></span></a>Configurations</h2>
+
+<p>The second argument of <code>gmruler.init</code> function is an simple object for configuration. Configurations supported are:</p>
+
+<ul>
+<li>
+<code>strokeColor</code> - Color of the polyline connecting points, e.g. <code>#ff0000</code>.</li>
+<li>
+<code>strokeWeight</code> - Weight of the polyline connecting points, e.g. <code>2</code>.</li>
+<li>
+<code>distanceUnit</code> - Unit for distance, can be <code>mile</code> or <code>km</code>. <code>km</code> is the default value.</li>
+</ul>
+
+<h2>
+<a id="samples" class="anchor" href="#samples" aria-hidden="true"><span class="octicon octicon-link"></span></a>Samples</h2>
+
+<p>Refer to <code>sample</code> folder for some examples.</p>
+
+<h1>
+<a id="customisations" class="anchor" href="#customisations" aria-hidden="true"><span class="octicon octicon-link"></span></a>Customisations</h1>
+
+<h2>
+<a id="style" class="anchor" href="#style" aria-hidden="true"><span class="octicon octicon-link"></span></a>Style</h2>
+
+<p>Update CSS style <code>gmruler-label</code>.</p>
+      </section>
+      <footer>
+        <p><small>Hosted on <a href="https://pages.github.com">GitHub Pages</a> using the Dinky theme</small></p>
+      </footer>
+    </div>
+    <!--[if !IE]><script>fixScale(document);</script><![endif]-->
+		
+  </body>
+</html>
