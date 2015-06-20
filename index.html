@@ -12,8 +12,30 @@
     <!--[if lt IE 9]>
     <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
+    <link rel="stylesheet" href="google-maps-ruler.css">
+    <style>
+      #map-canvas {
+        width: 640px;
+        height: 480px;
+      }
+    </style>
   </head>
   <body>
+    <script src="https://maps.googleapis.com/maps/api/js"></script>
+    <script src="dist/google-maps-ruler.min.js"></script>
+    <script>
+      function initialize() {
+        var mapOptions = {
+          center: { lat: -34.397, lng: 150.644},
+          zoom: 8
+        };
+        var map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
+        gmruler.init(map, {
+          distanceUnit: 'mile'
+        });
+      }
+      google.maps.event.addDomListener(window, 'load', initialize);
+    </script>
     <div class="wrapper">
       <header>
         <h1 class="header">Google-maps-ruler</h1>
@@ -87,7 +109,10 @@
 <h2>
 <a id="samples" class="anchor" href="#samples" aria-hidden="true"><span class="octicon octicon-link"></span></a>Samples</h2>
 
-<p>Refer to <code>sample</code> folder for some examples.</p>
+<p>Refer to <a href="sample/basic.html">sample page</a> for the sample.</p>
+
+<div id="map-canvas">
+</div>
 
 <h1>
 <a id="customisations" class="anchor" href="#customisations" aria-hidden="true"><span class="octicon octicon-link"></span></a>Customisations</h1>
@@ -102,6 +127,6 @@
       </footer>
     </div>
     <!--[if !IE]><script>fixScale(document);</script><![endif]-->
-		
+
   </body>
 </html>
