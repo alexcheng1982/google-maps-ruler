@@ -25,6 +25,10 @@ gmruler.init(map, {
 })
 ```
 
+After `gmruler` is bound to a `google.maps.Map` object, you can use `unbind()` method to remove the binding.
+
+To clear all points, use `gmruler.clear()` method.
+
 ## User interactions
 
 After `google-maps-ruler` is initialized on the map, following user interactions are supported:
