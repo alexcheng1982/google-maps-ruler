@@ -4,15 +4,38 @@
   <meta charset="UTF-8">
   <title>Google Maps Ruler basic sample</title>
   <style>
-    html, body, #map-canvas {
+    html, body {
       height: 100%;
       margin: 0;
       padding: 0;
+      position: relative;
+    }
+
+    #toolbar {
+      position: absolute;
+      top: 0;
+      height: 20px;
+      left: 0;
+      right: 0;
+    }
+
+    #map-canvas {
+      position: absolute;
+      top: 20px;
+      bottom: 0;
+      left: 0;
+      right: 0;
     }
   </style>
   <link rel="stylesheet" href="../google-maps-ruler.css">
 </head>
 <body>
+  <div id="toolbar">
+    <button onclick="clearMap()">Clear</button>
+    <button onclick="unbind()">Unbind</button>
+  </div>
+  <div id="map-canvas">
+  </div>
   <script src="https://maps.googleapis.com/maps/api/js"></script>
   <script src="../dist/google-maps-ruler.min.js"></script>
   <script>
@@ -27,8 +50,14 @@
       });
     }
     google.maps.event.addDomListener(window, 'load', initialize);
+
+    function clearMap() {
+      gmruler.clear();
+    }
+
+    function unbind() {
+      gmruler.unbind();
+    }
   </script>
-  <div id="map-canvas">
-  </div>
 </body>
 </html>

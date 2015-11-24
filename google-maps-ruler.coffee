@@ -5,18 +5,24 @@ gmruler =
   init: (@map, @options = {}) ->
     @points = []
     @createLine()
-    $GME.addListener(@map, 'rightclick', (event) =>
+    @listener = $GME.addListener(@map, 'rightclick', (event) =>
       @addPoint(event.latLng)
     )
 
+  unbind: () ->
+    @clear()
+    $GME.removeListener(@listener)    
+
   createLine: () ->
-    return if @line
-    @line = new $GM.Polyline(
-      path: []
-      strokeColor: @options.strokeColor || '#ff0000'
-      strokeWeight: @options.strokeWeight || 2
-    )
-    @line.setMap(@map)
+    if @line
+      @line.setPath([])
+    else 
+      @line = new $GM.Polyline(
+        path: []
+        strokeColor: @options.strokeColor || '#ff0000'
+        strokeWeight: @options.strokeWeight || 2
+      )
+      @line.setMap(@map)
 
   addPoint: (latLng) ->
     num = @points.length
@@ -55,6 +61,11 @@ gmruler =
 
   positionAt: (index) ->
     @line.getPath().getAt(index)
+
+  clear: () ->
+    @line.setPath([])
+    point.setMap(null) for point in @points 
+    @points = []
 
 class LabelOverlay extends $GM.OverlayView
   constructor: (@map, @position, @index, @observer, @options = {}) ->
