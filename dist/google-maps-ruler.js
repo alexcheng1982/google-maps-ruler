@@ -23,21 +23,23 @@ $GM = google.maps;
 $GME = $GM.event;
 
 gmruler = {
-  init: function(map, options) {
+  bind: function(map, options) {
     this.map = map;
     this.options = options != null ? options : {};
     this.points = [];
     this.createLine();
-    return $GME.addListener(this.map, 'rightclick', (function(_this) {
+    return this.listener = $GME.addListener(this.map, 'rightclick', (function(_this) {
       return function(event) {
         return _this.addPoint(event.latLng);
       };
     })(this));
   },
+  unbind: function() {
+    this.clear();
+    this.line = null;
+    return $GME.removeListener(this.listener);
+  },
   createLine: function() {
-    if (this.line) {
-      return;
-    }
     this.line = new $GM.Polyline({
       path: [],
       strokeColor: this.options.strokeColor || '#ff0000',
@@ -97,6 +99,16 @@ gmruler = {
   },
   positionAt: function(index) {
     return this.line.getPath().getAt(index);
+  },
+  clear: function() {
+    var point, _i, _len, _ref;
+    this.line.setPath([]);
+    _ref = this.points;
+    for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+      point = _ref[_i];
+      point.setMap(null);
+    }
+    return this.points = [];
   }
 };
 

@@ -2,15 +2,19 @@ $GM = google.maps
 $GME = $GM.event
 
 gmruler =
-  init: (@map, @options = {}) ->
+  bind: (@map, @options = {}) ->
     @points = []
     @createLine()
-    $GME.addListener(@map, 'rightclick', (event) =>
+    @listener = $GME.addListener(@map, 'rightclick', (event) =>
       @addPoint(event.latLng)
     )
 
+  unbind: () ->
+    @clear()
+    @line = null
+    $GME.removeListener(@listener)    
+
   createLine: () ->
-    return if @line
     @line = new $GM.Polyline(
       path: []
       strokeColor: @options.strokeColor || '#ff0000'
@@ -55,6 +59,11 @@ gmruler =
 
   positionAt: (index) ->
     @line.getPath().getAt(index)
+
+  clear: () ->
+    @line.setPath([])
+    point.setMap(null) for point in @points 
+    @points = []
 
 class LabelOverlay extends $GM.OverlayView
   constructor: (@map, @position, @index, @observer, @options = {}) ->
