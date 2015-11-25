@@ -17,10 +17,10 @@ Download from GitHub and include `dist/google-maps-ruler.js` or `dist/google-map
 
 `google-maps-ruler` uses [UMD](https://github.com/umdjs/umd), so it works in CommonJS, AMD and browser environments. For example, if the JavaScript file is included using `<script>` directly, it exposes a global object `gmruler`.
 
-`gmruler` requires a `google.maps.Map` object to work with. After `google.maps.Map` is created, use `gmruler.init` to initialize.
+`gmruler` requires a `google.maps.Map` object to work with. After `google.maps.Map` is created, use `gmruler.bind` to bind `gmruler` to the `google.maps.Map` object.
 
 ```coffeescript
-gmruler.init(map, {
+gmruler.bind(map, {
   distanceUnit: 'mile'
 })
 ```
@@ -31,7 +31,7 @@ To clear all points, use `gmruler.clear()` method.
 
 ## User interactions
 
-After `google-maps-ruler` is initialized on the map, following user interactions are supported:
+After `google-maps-ruler` is bound to the map, following user interactions are supported:
 
 * Right click to add a new point.
 * Double-click on a point to remove it.
@@ -39,7 +39,7 @@ After `google-maps-ruler` is initialized on the map, following user interactions
 
 ## Configurations
 
-The second argument of `gmruler.init` function is an simple object for configuration. Configurations supported are:
+The second argument of `gmruler.bind` function is an simple object for configuration. Configurations supported are:
 
 * `strokeColor` - Color of the polyline connecting points, e.g. `#ff0000`.
 * `strokeWeight` - Weight of the polyline connecting points, e.g. `2`.

@@ -23,7 +23,7 @@ $GM = google.maps;
 $GME = $GM.event;
 
 gmruler = {
-  init: function(map, options) {
+  bind: function(map, options) {
     this.map = map;
     this.options = options != null ? options : {};
     this.points = [];
@@ -36,19 +36,16 @@ gmruler = {
   },
   unbind: function() {
     this.clear();
+    this.line = null;
     return $GME.removeListener(this.listener);
   },
   createLine: function() {
-    if (this.line) {
-      return this.line.setPath([]);
-    } else {
-      this.line = new $GM.Polyline({
-        path: [],
-        strokeColor: this.options.strokeColor || '#ff0000',
-        strokeWeight: this.options.strokeWeight || 2
-      });
-      return this.line.setMap(this.map);
-    }
+    this.line = new $GM.Polyline({
+      path: [],
+      strokeColor: this.options.strokeColor || '#ff0000',
+      strokeWeight: this.options.strokeWeight || 2
+    });
+    return this.line.setMap(this.map);
   },
   addPoint: function(latLng) {
     var num, point;

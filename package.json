@@ -1,6 +1,6 @@
 {
   "name": "google-maps-ruler",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "A small JavaScript library to allow users to measure distance between points on Google Maps.",
   "homepage": "https://github.com/alexcheng1982/google-maps-ruler",
   "author": "Fu Cheng <alexcheng1982@gmail.com> (https://github.com/alexcheng1982)",

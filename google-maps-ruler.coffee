@@ -2,7 +2,7 @@ $GM = google.maps
 $GME = $GM.event
 
 gmruler =
-  init: (@map, @options = {}) ->
+  bind: (@map, @options = {}) ->
     @points = []
     @createLine()
     @listener = $GME.addListener(@map, 'rightclick', (event) =>
@@ -11,18 +11,16 @@ gmruler =
 
   unbind: () ->
     @clear()
+    @line = null
     $GME.removeListener(@listener)    
 
   createLine: () ->
-    if @line
-      @line.setPath([])
-    else 
-      @line = new $GM.Polyline(
-        path: []
-        strokeColor: @options.strokeColor || '#ff0000'
-        strokeWeight: @options.strokeWeight || 2
-      )
-      @line.setMap(@map)
+    @line = new $GM.Polyline(
+      path: []
+      strokeColor: @options.strokeColor || '#ff0000'
+      strokeWeight: @options.strokeWeight || 2
+    )
+    @line.setMap(@map)
 
   addPoint: (latLng) ->
     num = @points.length

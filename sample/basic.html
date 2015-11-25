@@ -45,7 +45,7 @@
         zoom: 8
       };
       var map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
-      gmruler.init(map, {
+      gmruler.bind(map, {
         distanceUnit: 'mile'
       });
     }
