@@ -30,7 +30,7 @@
           zoom: 8
         };
         var map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
-        gmruler.init(map, {
+        gmruler.bind(map, {
           distanceUnit: 'mile'
         });
       }
@@ -75,16 +75,16 @@
 
 <p><code>google-maps-ruler</code> uses <a href="https://github.com/umdjs/umd">UMD</a>, so it works in CommonJS, AMD and browser environments. For example, if the JavaScript file is included using <code>&lt;script&gt;</code> directly, it exposes a global object <code>gmruler</code>.</p>
 
-<p><code>gmruler</code> requires a <code>google.maps.Map</code> object to work with. After <code>google.maps.Map</code> is created, use <code>gmruler.init</code> to initialize.</p>
+<p><code>gmruler</code> requires a <code>google.maps.Map</code> object to work with. After <code>google.maps.Map</code> is created, use <code>gmruler.bind</code> to bind to the map.</p>
 
-<div class="highlight highlight-coffeescript"><pre>gmruler.init(map, {
+<div class="highlight highlight-coffeescript"><pre>gmruler.bind(map, {
   <span class="pl-v"><span class="pl-v">distanceUnit:</span></span> <span class="pl-s"><span class="pl-pds">'</span>mile<span class="pl-pds">'</span></span>
 })</pre></div>
 
 <h2>
 <a id="user-interactions" class="anchor" href="#user-interactions" aria-hidden="true"><span class="octicon octicon-link"></span></a>User interactions</h2>
 
-<p>After <code>google-maps-ruler</code> is initialized on the map, following user interactions are supported:</p>
+<p>After <code>google-maps-ruler</code> is bound to the map, following user interactions are supported:</p>
 
 <ul>
 <li>Right click to add a new point.</li>
@@ -95,7 +95,7 @@
 <h2>
 <a id="configurations" class="anchor" href="#configurations" aria-hidden="true"><span class="octicon octicon-link"></span></a>Configurations</h2>
 
-<p>The second argument of <code>gmruler.init</code> function is an simple object for configuration. Configurations supported are:</p>
+<p>The second argument of <code>gmruler.bind</code> function is an simple object for configuration. Configurations supported are:</p>
 
 <ul>
 <li>
