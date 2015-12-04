@@ -30,7 +30,8 @@
           zoom: 8
         };
         var map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
-        gmruler.bind(map, {
+        gmruler.init(map);
+        gmruler.add('default', {
           distanceUnit: 'mile'
         });
       }
@@ -75,41 +76,14 @@
 
 <p><code>google-maps-ruler</code> uses <a href="https://github.com/umdjs/umd">UMD</a>, so it works in CommonJS, AMD and browser environments. For example, if the JavaScript file is included using <code>&lt;script&gt;</code> directly, it exposes a global object <code>gmruler</code>.</p>
 
-<p><code>gmruler</code> requires a <code>google.maps.Map</code> object to work with. After <code>google.maps.Map</code> is created, use <code>gmruler.bind</code> to bind to the map.</p>
 
-<div class="highlight highlight-coffeescript"><pre>gmruler.bind(map, {
-  <span class="pl-v"><span class="pl-v">distanceUnit:</span></span> <span class="pl-s"><span class="pl-pds">'</span>mile<span class="pl-pds">'</span></span>
-})</pre></div>
-
-<h2>
-<a id="user-interactions" class="anchor" href="#user-interactions" aria-hidden="true"><span class="octicon octicon-link"></span></a>User interactions</h2>
-
-<p>After <code>google-maps-ruler</code> is bound to the map, following user interactions are supported:</p>
-
-<ul>
-<li>Right click to add a new point.</li>
-<li>Double-click on a point to remove it.</li>
-<li>Drag the point label to change its position.</li>
-</ul>
-
-<h2>
-<a id="configurations" class="anchor" href="#configurations" aria-hidden="true"><span class="octicon octicon-link"></span></a>Configurations</h2>
-
-<p>The second argument of <code>gmruler.bind</code> function is an simple object for configuration. Configurations supported are:</p>
-
-<ul>
-<li>
-<code>strokeColor</code> - Color of the polyline connecting points, e.g. <code>#ff0000</code>.</li>
-<li>
-<code>strokeWeight</code> - Weight of the polyline connecting points, e.g. <code>2</code>.</li>
-<li>
-<code>distanceUnit</code> - Unit for distance, can be <code>mile</code> or <code>km</code>. <code>km</code> is the default value.</li>
-</ul>
 
 <h2>
 <a id="samples" class="anchor" href="#samples" aria-hidden="true"><span class="octicon octicon-link"></span></a>Samples</h2>
 
 <p>Refer to <a href="sample/basic.html">sample page</a> for the sample.</p>
+
+<p><strong>Right-click</strong> on the map below to add new point.</p>
 
 <div id="map-canvas">
 </div>
