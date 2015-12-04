@@ -31,32 +31,52 @@
 </head>
 <body>
   <div id="toolbar">
+    <input id="rulerName" type="text">
+    <button onclick="add()">Add</button>
+    <button onclick="list()">List</button>
+    <span id="rulerNames"></span>
+    <input id="rulerNameToActivate" type="text">
+    <button onclick="activate()">Activate</button>
     <button onclick="clearMap()">Clear</button>
-    <button onclick="unbind()">Unbind</button>
   </div>
   <div id="map-canvas">
   </div>
   <script src="https://maps.googleapis.com/maps/api/js"></script>
   <script src="../dist/google-maps-ruler.min.js"></script>
   <script>
+    var rulerOptions = {
+      distanceUnit: 'mile'
+    };
     function initialize() {
       var mapOptions = {
         center: { lat: -34.397, lng: 150.644},
         zoom: 8
       };
       var map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
-      gmruler.bind(map, {
-        distanceUnit: 'mile'
-      });
+      gmruler.init(map);
     }
     google.maps.event.addDomListener(window, 'load', initialize);
 
     function clearMap() {
-      gmruler.clear();
+      gmruler.removeAll();
     }
 
-    function unbind() {
-      gmruler.unbind();
+    function add() {
+      var name = document.getElementById('rulerName').value;
+      if (name) {
+        gmruler.add(name, rulerOptions);
+      }
+    }
+
+    function list() {
+      document.getElementById('rulerNames').innerHTML = gmruler.getNames().join(',');
+    }
+
+    function activate() {
+      var name = document.getElementById('rulerNameToActivate').value;
+      if (name) {
+        gmruler.activate(name);
+      }
     }
   </script>
 </body>

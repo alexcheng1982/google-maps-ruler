@@ -14,7 +14,7 @@
   }
 }(this, function () {
 
-var $GM, $GME, LabelOverlay, gmruler,
+var $GM, $GME, LabelOverlay, Ruler, gmruler,
   __hasProp = {}.hasOwnProperty,
   __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
 
@@ -23,49 +23,102 @@ $GM = google.maps;
 $GME = $GM.event;
 
 gmruler = {
-  bind: function(map, options) {
+  rulers: {},
+  init: function(map) {
+    this.map = map;
+    this.removeAll();
+    return this.rulers = {};
+  },
+  add: function(name, options) {
+    var ruler;
+    ruler = new Ruler(name, this.map, options);
+    this.rulers[name] = ruler;
+    return this.activate(name);
+  },
+  getNames: function() {
+    return Object.keys(this.rulers);
+  },
+  activate: function(name) {
+    var ruler;
+    ruler = this.rulers[name];
+    if (ruler) {
+      if (this.activeRuler) {
+        this.activeRuler.unbind();
+      }
+      this.activeRuler = ruler;
+      return this.activeRuler.bind();
+    }
+  },
+  remove: function(name) {
+    var ruler;
+    ruler = this.rulers[name];
+    if (ruler) {
+      ruler.remove();
+      return delete this.rulers[name];
+    }
+  },
+  removeAll: function() {
+    return this.getNames().forEach((function(_this) {
+      return function(name) {
+        return _this.remove(name);
+      };
+    })(this));
+  }
+};
+
+Ruler = (function() {
+  function Ruler(name, map, options) {
+    this.name = name;
     this.map = map;
     this.options = options != null ? options : {};
     this.points = [];
     this.createLine();
+  }
+
+  Ruler.prototype.bind = function() {
     return this.listener = $GME.addListener(this.map, 'rightclick', (function(_this) {
       return function(event) {
         return _this.addPoint(event.latLng);
       };
     })(this));
-  },
-  unbind: function() {
-    this.clear();
-    this.line = null;
+  };
+
+  Ruler.prototype.unbind = function() {
     return $GME.removeListener(this.listener);
-  },
-  createLine: function() {
+  };
+
+  Ruler.prototype.createLine = function() {
     this.line = new $GM.Polyline({
       path: [],
       strokeColor: this.options.strokeColor || '#ff0000',
       strokeWeight: this.options.strokeWeight || 2
     });
     return this.line.setMap(this.map);
-  },
-  addPoint: function(latLng) {
+  };
+
+  Ruler.prototype.addPoint = function(latLng) {
     var num, point;
     num = this.points.length;
     this.line.getPath().push(latLng);
     point = new LabelOverlay(this.map, latLng, num, this, this.options);
     this.points.push(point);
     return this.updateDistance(num);
-  },
-  removePoint: function(index) {
+  };
+
+  Ruler.prototype.removePoint = function(index) {
     return this.pointRemoved(index);
-  },
-  calculateDistance: function(point1, point2) {
+  };
+
+  Ruler.prototype.calculateDistance = function(point1, point2) {
     return $GM.geometry.spherical.computeDistanceBetween(point1, point2);
-  },
-  pointPositionUpdated: function(index, position) {
+  };
+
+  Ruler.prototype.pointPositionUpdated = function(index, position) {
     this.line.getPath().setAt(index, position);
     return this.updateDistance(index);
-  },
-  pointRemoved: function(index) {
+  };
+
+  Ruler.prototype.pointRemoved = function(index) {
     if (index === 0) {
       return;
     }
@@ -73,8 +126,9 @@ gmruler = {
     this.points.splice(index, 1);
     this.updateIndex(index);
     return this.updateDistance(index);
-  },
-  updateDistance: function(startIndex) {
+  };
+
+  Ruler.prototype.updateDistance = function(startIndex) {
     var index, _i, _ref, _results;
     if (startIndex < 1) {
       startIndex = 1;
@@ -85,8 +139,9 @@ gmruler = {
       _results.push(this.points[index].updateDistance());
     }
     return _results;
-  },
-  updateIndex: function(startIndex) {
+  };
+
+  Ruler.prototype.updateIndex = function(startIndex) {
     var index, _i, _ref, _results;
     if (startIndex < 1) {
       startIndex = 1;
@@ -96,11 +151,13 @@ gmruler = {
       _results.push(this.points[index].index = this.points[index].index - 1);
     }
     return _results;
-  },
-  positionAt: function(index) {
+  };
+
+  Ruler.prototype.positionAt = function(index) {
     return this.line.getPath().getAt(index);
-  },
-  clear: function() {
+  };
+
+  Ruler.prototype.clear = function() {
     var point, _i, _len, _ref;
     this.line.setPath([]);
     _ref = this.points;
@@ -109,8 +166,17 @@ gmruler = {
       point.setMap(null);
     }
     return this.points = [];
-  }
-};
+  };
+
+  Ruler.prototype.remove = function() {
+    this.clear();
+    this.unbind();
+    return this.line = null;
+  };
+
+  return Ruler;
+
+})();
 
 LabelOverlay = (function(_super) {
   __extends(LabelOverlay, _super);
