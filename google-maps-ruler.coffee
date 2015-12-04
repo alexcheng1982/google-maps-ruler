@@ -2,16 +2,48 @@ $GM = google.maps
 $GME = $GM.event
 
 gmruler =
-  bind: (@map, @options = {}) ->
+  rulers: {}
+
+  init: (@map) ->
+    @removeAll()
+    @rulers = {}
+
+  add: (name, options) ->
+    ruler = new Ruler(name, @map, options)
+    @rulers[name] = ruler
+    @activate(name)
+    
+  getNames: () ->
+    Object.keys(@rulers) 
+
+  activate: (name) ->
+    ruler = @rulers[name]
+    if ruler
+      if @activeRuler
+        @activeRuler.unbind()  
+      @activeRuler = ruler
+      @activeRuler.bind()
+
+  remove: (name) ->
+    ruler = @rulers[name]
+    if ruler
+      ruler.remove()
+      delete @rulers[name]
+
+  removeAll: () ->
+    @getNames().forEach (name) => @remove(name)
+
+class Ruler 
+  constructor: (@name, @map, @options = {}) ->
     @points = []
     @createLine()
+
+  bind: () ->  
     @listener = $GME.addListener(@map, 'rightclick', (event) =>
       @addPoint(event.latLng)
     )
 
   unbind: () ->
-    @clear()
-    @line = null
     $GME.removeListener(@listener)    
 
   createLine: () ->
@@ -64,6 +96,11 @@ gmruler =
     @line.setPath([])
     point.setMap(null) for point in @points 
     @points = []
+
+  remove: () ->
+    @clear()
+    @unbind()
+    @line = null  
 
 class LabelOverlay extends $GM.OverlayView
   constructor: (@map, @position, @index, @observer, @options = {}) ->

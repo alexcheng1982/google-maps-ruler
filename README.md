@@ -17,21 +17,27 @@ Download from GitHub and include `dist/google-maps-ruler.js` or `dist/google-map
 
 `google-maps-ruler` uses [UMD](https://github.com/umdjs/umd), so it works in CommonJS, AMD and browser environments. For example, if the JavaScript file is included using `<script>` directly, it exposes a global object `gmruler`.
 
-`gmruler` requires a `google.maps.Map` object to work with. After `google.maps.Map` is created, use `gmruler.bind` to bind `gmruler` to the `google.maps.Map` object.
+`gmruler` requires a `google.maps.Map` object to work with. After `google.maps.Map` is created, use `gmruler.init()` to initialize `gmruler` with the `google.maps.Map` object.
 
 ```coffeescript
-gmruler.bind(map, {
+gmruler.init(map)
+```
+
+After `gmruler` is initialized with a `google.maps.Map` object, you can use `add(name, options)` method to add rulers to the map with name and options.
+
+```coffeescript
+gmruler.add('myruler', {
   distanceUnit: 'mile'
 })
 ```
 
-After `gmruler` is bound to a `google.maps.Map` object, you can use `unbind()` method to remove the binding.
+You can add multiple rulers to the map by using `add(name, options)` method, but only one ruler is active at the same time. Newly added ruler is made active after creation. You can use `getNames()` to get a list of all rulers' names, then use `activate(name)` to activate a ruler.
 
-To clear all points, use `gmruler.clear()` method.
+Ruler can be removed by using `remove(name)` or `removeAll()`.
 
 ## User interactions
 
-After `google-maps-ruler` is bound to the map, following user interactions are supported:
+After a ruler is created, following user interactions are supported:
 
 * Right click to add a new point.
 * Double-click on a point to remove it.
